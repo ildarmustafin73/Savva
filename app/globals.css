@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Palette system built around SAVVA's two official colours — olive
+     rgb(125,130,105) / cream rgb(223,204,180), sampled directly from the
+     official PDF menu. Those two exact values stay in the system (as
+     --color-olive and --color-on-olive) for brand-accurate moments, but
+     dense UI text never reads directly off that pair — it is a ~2.75:1
+     contrast on its own, well under WCAG AA. Everything else here is a
+     proper ramp built outward from the two official anchors.
+     Stored as "R G B" channels so Tailwind's opacity modifiers
+     (e.g. bg-text-primary/85) work via rgb(var(--x) / <alpha-value>). */
+
+  /* Paper (light) side */
+  --color-background: 246 242 234; /* #f6f2ea warm ivory — default page ground */
+  --color-surface: 251 248 242; /* #fbf8f2 soft cream card surface */
+  --color-surface-alt: 236 228 212; /* #ece4d4 deeper beige for contrast blocks */
+  --color-text-primary: 34 36 27; /* #22241b near-black, olive-tinted ink */
+  --color-text-secondary: 108 100 84; /* #6c6454 muted brown-grey */
+  --color-border: 222 213 193; /* #ded5c1 */
+
+  /* Brand anchors — official, unchanged, used for accents/logo-matching */
+  --color-olive: 125 130 105; /* #7d8269 */
+  --color-on-olive: 223 204 180; /* #dfccb4 */
+
+  /* Olive ramp — dark surfaces (Hero, Menu, Footer, Experience) */
+  --color-olive-deep: 88 92 71; /* #585c47 mid-dark — gradients, hover step */
+  --color-olive-ink: 40 43 32; /* #282b20 deepest — primary dark section ground */
+  --color-accent-soft: 199 203 178; /* #c7cbb2 pale olive tint — tinted paper band */
+
+  /* Text on dark olive surfaces — bright, ~10:1 on olive-ink */
+  --color-on-dark: 247 243 233; /* #f7f3e9 primary text on dark */
+  --color-on-dark-soft: 196 190 170; /* #c4beaa secondary text on dark, ~5.5:1 */
+
+  --color-wood: 138 106 72; /* #8a6a48 natural wood — secondary material accent */
+
+  /* Shadow-as-border recipe (make-interfaces-feel-better) — neutral, not
+     brand-tinted, so it reads correctly on any surface. */
+  --shadow-border: 0px 0px 0px 1px rgba(0, 0, 0, 0.07), 0px 1px 2px -1px rgba(0, 0, 0, 0.06),
+    0px 4px 10px -2px rgba(0, 0, 0, 0.06);
+  --shadow-border-hover: 0px 0px 0px 1px rgba(0, 0, 0, 0.09), 0px 2px 4px -1px rgba(0, 0, 0, 0.08),
+    0px 8px 16px -4px rgba(0, 0, 0, 0.09);
+}
+
+* {
+  border-color: rgb(var(--color-border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--color-background));
+  color: rgb(var(--color-text-primary));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::selection {
+  background-color: rgb(var(--color-olive));
+  color: rgb(var(--color-on-dark));
+}
+
+:focus-visible {
+  outline: 2px solid rgb(var(--color-olive));
+  outline-offset: 3px;
+}
