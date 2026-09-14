@@ -6,39 +6,53 @@ export type Dictionary = {
   };
   nav: {
     menu: string;
-    experience: string;
+    inside: string;
     visit: string;
     directions: string;
     instagram: string;
+    openMenu: string;
+    closeMenu: string;
   };
   hero: {
     locationTag: string;
     tagline: string;
+    /** One primary action + one secondary. Everything else lives in the nav. */
     exploreMenu: string;
     getDirections: string;
-  };
-  intro: {
-    eyebrow: string;
-    heading: string;
-    body: string;
+    scrollHint: string;
   };
   selection: {
     eyebrow: string;
     heading: string;
-    spaceLabel: string;
+    body: string;
   };
   menuSection: {
     eyebrow: string;
     heading: string;
+    body: string;
   };
-  pastry: {
+  food: {
     eyebrow: string;
     heading: string;
     body: string;
+    /** Labels for the three real, caption-verified items shown in this section. */
+    combo: string;
+    comboBody: string;
+    toCar: string;
+    toCarBody: string;
   };
   mood: {
     eyebrow: string;
     heading: string;
+    body: string;
+    captions: {
+      lounge: string;
+      counter: string;
+      facade: string;
+      tray: string;
+      table: string;
+      cold: string;
+    };
   };
   experience: {
     eyebrow: string;
@@ -51,6 +65,13 @@ export type Dictionary = {
     body: string;
     play: string;
     close: string;
+    labels: {
+      pourCups: string;
+      baristaCup: string;
+      hibiscusPour: string;
+      summerFlavours: string;
+      icedMood: string;
+    };
   };
   visit: {
     eyebrow: string;

@@ -19,5 +19,15 @@
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules",
+    "components/Intro.tsx",
+    "components/PastrySection.tsx",
+    "components/SignatureDrinks.tsx",
+    "components/MoodGallery.tsx",
+    "components/Experience.tsx",
+    "components/Hero.tsx",
+    "components/ui/SectionHeader.tsx",
+    "components/hero-variants"
+  ]
 }

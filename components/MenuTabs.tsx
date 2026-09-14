@@ -6,7 +6,6 @@ import { menu } from "@/data/menu";
 import { getMenuItemLabel } from "@/data/i18n/menuLabel";
 import { BotanicalBranch } from "./ui/BotanicalBranch";
 import { Reveal } from "./ui/Reveal";
-import { SectionHeader } from "./ui/SectionHeader";
 import { useLocale } from "./i18n/LocaleProvider";
 
 function getCategoryLabel(category: (typeof menu)[number], locale: "en" | "ar" | "ru") {
@@ -28,7 +27,22 @@ export function MenuTabs() {
       />
       <div className="relative mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
-          <SectionHeader eyebrow={t.menuSection.eyebrow} heading={t.menuSection.heading} tone="light" />
+          <div className="grid gap-6 md:grid-cols-12 md:items-end">
+            <div className="md:col-span-7">
+              {/* The eyebrow carries the word people are actually scanning for,
+                  so it is set as a label with weight, not 10px of grey tracking. */}
+              <p className="mb-3 flex items-center gap-3 text-sm font-medium uppercase tracking-widest2 text-on-dark">
+                <span aria-hidden="true" className="h-px w-8 bg-on-dark/40" />
+                {t.menuSection.eyebrow}
+              </p>
+              <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-on-dark sm:text-5xl">
+                {t.menuSection.heading}
+              </h2>
+            </div>
+            <p className="text-pretty max-w-sm text-[0.9375rem] leading-relaxed text-on-dark-soft md:col-span-4 md:col-start-9">
+              {t.menuSection.body}
+            </p>
+          </div>
         </Reveal>
 
         <Reveal delay={0.1}>

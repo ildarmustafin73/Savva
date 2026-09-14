@@ -71,6 +71,43 @@ body {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Hero entrance — CSS, not JS, on purpose.
+
+   The resting state of every child is the visible one; the keyframe animates
+   *from* hidden. So if the animation never runs — reduced motion, a throttled
+   background tab, a JS failure — the hero still reads correctly instead of
+   sitting at opacity:0. Below-the-fold reveals stay on framer-motion, where a
+   missed animation only costs a flourish, not the first thing a visitor sees.
+   -------------------------------------------------------------------------- */
+@keyframes savva-hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.hero-stagger > * {
+  animation: savva-hero-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hero-stagger > *:nth-child(1) { animation-delay: 0.2s; }
+.hero-stagger > *:nth-child(2) { animation-delay: 0.32s; }
+.hero-stagger > *:nth-child(3) { animation-delay: 0.44s; }
+.hero-stagger > *:nth-child(4) { animation-delay: 0.56s; }
+.hero-stagger > *:nth-child(5) { animation-delay: 0.68s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-stagger > * {
+    animation: none;
+  }
+}
+
 ::selection {
   background-color: rgb(var(--color-olive));
   color: rgb(var(--color-on-dark));

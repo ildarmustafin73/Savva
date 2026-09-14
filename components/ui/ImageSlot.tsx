@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
 import Image from "next/image";
+import { useScrollReveal } from "./useScrollReveal";
 
 type Variant = "arch" | "grain" | "beam" | "grid" | "ring";
 
@@ -57,19 +58,26 @@ export function ImageSlot({
 }: ImageSlotProps) {
   const frame =
     "relative overflow-hidden outline outline-1 -outline-offset-1 outline-black/10 shadow-depth";
-  const reveal = disableReveal
+  const ref = useRef<HTMLDivElement>(null);
+  const revealed = useScrollReveal(ref, disableReveal);
+
+  const hidden = revealDirection === "left" ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)";
+  const shown = "inset(0 0 0 0)";
+  const style: React.CSSProperties = disableReveal
     ? {}
     : {
-        initial: { clipPath: revealDirection === "left" ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)" },
-        whileInView: { clipPath: revealDirection === "left" ? "inset(0 0 0 0)" : "inset(0 0 0% 0)" },
-        viewport: { once: true as const, margin: "-10% 0px" },
-        transition: { duration: 0.9, delay, ease: [0.65, 0, 0.35, 1] as const },
+        clipPath: revealed ? shown : hidden,
+        transition: `clip-path 0.9s cubic-bezier(0.65, 0, 0.35, 1) ${delay}s`,
       };
-  const Wrapper = disableReveal ? "div" : motion.div;
 
-  if (src) {
-    return (
-      <Wrapper className={`${frame} ${aspect} ${className}`} {...reveal}>
+  return (
+    <div
+      ref={ref}
+      className={`${frame} ${aspect} ${className}`}
+      style={style}
+      {...(src ? {} : { role: "img", "aria-label": alt })}
+    >
+      {src ? (
         <Image
           src={src}
           alt={alt}
@@ -79,16 +87,13 @@ export function ImageSlot({
           className="object-cover"
           style={{ objectPosition }}
         />
-      </Wrapper>
-    );
-  }
-
-  return (
-    <Wrapper className={`${frame} ${aspect} ${className}`} role="img" aria-label={alt} {...reveal}>
-      <PlaceholderArt variant={variant} />
-    </Wrapper>
+      ) : (
+        <PlaceholderArt variant={variant} />
+      )}
+    </div>
   );
 }
+
 
 function PlaceholderArt({ variant }: { variant: Variant }) {
   const shapes: Record<Variant, JSX.Element> = {

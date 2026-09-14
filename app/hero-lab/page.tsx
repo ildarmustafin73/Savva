@@ -1,16 +1,14 @@
-import { VariantSwitcher } from "@/components/hero-variants/VariantSwitcher";
-
-export const metadata = {
-  title: "Hero lab — SAVVA (internal)",
-  robots: { index: false, follow: false },
-};
+import { redirect } from "next/navigation";
 
 /**
- * Internal comparison sandbox — not linked from the live site, not part
- * of the shipped experience. Lets three Hero directions be compared live
- * in one browser tab instead of reading a text description. Delete this
- * route (and components/hero-variants/) once a direction is chosen.
+ * Superseded by /lab, which compares full-page variants (hero, food, inside,
+ * experience) instead of hero-only mock-ups. Kept as a redirect so any existing
+ * link still lands somewhere useful.
+ *
+ * The old hero-only sandbox components are still on disk under
+ * components/hero-variants/ but are no longer referenced or type-checked
+ * (see tsconfig "exclude") and can be deleted whenever you want.
  */
 export default function HeroLabPage() {
-  return <VariantSwitcher />;
+  redirect("/lab");
 }

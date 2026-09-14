@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 type CTAButtonProps = {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "ghost" | "light";
+  variant?: "primary" | "ghost" | "light" | "cream";
   external?: boolean;
   /** Disables the press-scale for contexts where the motion would distract. */
   static?: boolean;
@@ -24,6 +24,10 @@ const variants = {
     "border border-text-primary/30 text-text-primary [@media(hover:hover)]:hover:border-text-primary",
   light:
     "border border-on-dark/50 text-on-dark [@media(hover:hover)]:hover:bg-on-dark/10",
+  // Solid counterpart to `light` — the primary action on a dark/photo surface,
+  // so a pair of actions there reads as one lead and one alternative rather
+  // than two identical outlines.
+  cream: "bg-on-dark text-olive-ink [@media(hover:hover)]:hover:bg-on-dark/90",
 };
 
 export function CTAButton({

@@ -1,79 +1,109 @@
 import type { Dictionary } from "./types";
 
-// Arabic translation — same facts and claims as the English base, written
-// as natural Modern Standard Arabic rather than a literal word-for-word
-// pass. RTL layout is driven by meta.dir, applied to <html dir>.
+/**
+ * Written as natural MSA, not a transliteration of the English. Where SAVVA
+ * has published its own Arabic wording (menu item names, Instagram captions),
+ * that wording is used rather than a new translation.
+ */
 export const ar: Dictionary = {
   meta: { htmlLang: "ar", dir: "rtl" },
   nav: {
-    menu: "القائمة",
-    experience: "تجربتنا",
-    visit: "زورونا",
+    menu: "المنيو",
+    inside: "داخل سافا",
+    visit: "الموقع",
     directions: "الاتجاهات",
-    instagram: "انستقرام",
+    instagram: "إنستغرام",
+    openMenu: "فتح القائمة",
+    closeMenu: "إغلاق القائمة",
   },
   hero: {
     locationTag: "المدينة المنورة · قهوة مختصة",
     tagline: "يوم في سافا\nكل ما تحتاجه.",
-    exploreMenu: "تصفح القائمة",
+    exploreMenu: "تصفّح المنيو",
     getDirections: "الاتجاهات",
-  },
-  intro: {
-    eyebrow: "سافا",
-    heading: "قهوة.\nمكان.\nلحظات هادئة.",
-    body: "تقوم سافا على فكرة بسيطة — القهوة ألذّ حين يكون هناك وقت للتمهّل. خامات طبيعية، إضاءة هادئة، وفناجين مُعدّة بعناية تصنع مكانًا يُدعوك للبقاء فيه، لا للعبور منه.",
+    scrollHint: "مرّر",
   },
   selection: {
-    eyebrow: "مختارات سافا",
-    heading: "تحمل اسم\nسافا.",
-    spaceLabel: "المكان",
+    eyebrow: "ابدأ من هنا",
+    heading: "أربعة تبدأ بها\nزيارتك.",
+    body: "أول مرة في سافا؟ هذه أسهل بداية — مشروب بارد يحمل اسم سافا، قهوة اليوم، وصنفان يكملانهما.",
   },
   menuSection: {
-    eyebrow: "القائمة",
-    heading: "ما نحضّره\nونقدّمه.",
+    eyebrow: "المنيو الكامل",
+    heading: "كل ما نقدّمه.",
+    body: "حار وبارد وحلى وفطور — القائمة كاملة بالأسعار بالريال.",
   },
-  pastry: {
-    eyebrow: "المخبوزات",
-    heading: "مخبوزات بسيطة.\nنُعدّها بأنفسنا.",
-    body: "تشكيلة صغيرة وموسمية — لتكون رفيقة فنجان قهوة هادئ.",
+  food: {
+    eyebrow: "الفطور والحلى",
+    heading: "وشيء تأكله\nمع قهوتك.",
+    body: "ساندوتشات تُحضَّر عند الطلب وقائمة حلى قصيرة — الجزء الذي يحوّل فنجان القهوة إلى وقفة كاملة.",
+    combo: "فطور يبدأ يومك صح",
+    comboBody: "ساندوتش مع قهوة اليوم — الثنائي الذي تقدّمه سافا للصباح.",
+    toCar: "متأخر؟",
+    toCarBody: "قهوتك وفطورك يوصلون لك بالسيارة، بدون ما تتأخر.",
   },
   mood: {
-    eyebrow: "الأجواء",
-    heading: "المكان،\nفي تفاصيله الهادئة.",
+    eyebrow: "من الداخل",
+    heading: "المكان\nالذي جئت من أجله.",
+    body: "نوافذ مقوّسة، زيتوني وكريمي، نباتات حقيقية وضوء نهار وفير. هكذا تبدو سافا فعلاً.",
+    captions: {
+      lounge: "الجلسة",
+      counter: "عند الباريستا",
+      facade: "بئر عثمان، مساءً",
+      tray: "يُقدَّم على الصينية",
+      table: "طاولة لبعد الظهر",
+      cold: "مشروبات باردة بالصف",
+    },
   },
   experience: {
-    eyebrow: "تجربتنا",
-    heading: "ثلاثة أشياء\nنحرص عليها.",
+    eyebrow: "ما الذي ينتظرك",
+    heading: "ثلاثة أسباب\nللعودة.",
     items: [
-      { title: "القهوة", body: "نختارها بعناية، ونحضّرها بدقة." },
-      { title: "الطعام", body: "بسيط ومدروس، نُعدّه بأنفسنا." },
-      { title: "المكان", body: "ضوء طبيعي، خامات طبيعية، ومساحة للتنفّس." },
+      {
+        title: "قهوة مختصة",
+        body: "إسبريسو وفلتر وV60، إلى جانب المشروبات الباردة التي تحمل اسم سافا.",
+      },
+      {
+        title: "قائمة باردة خاصة",
+        body: "ايس كركديه سافا، شمام سافا، ماتشا بيري — مشروبات باردة تحمل اسم سافا في المنيو.",
+      },
+      {
+        title: "مكان تبقى فيه",
+        body: "ضوء نهار وخضرة وجلسات مريحة — مصمّم لجلسة طويلة، لا لوقوف سريع.",
+      },
     ],
   },
   video: {
-    eyebrow: "سافا في حركة",
-    heading: "لمحة أقرب،\nفي حركة.",
-    body: "لحظات حقيقية من داخل سافا — مرّر للمعاينة، واضغط للمشاهدة.",
+    eyebrow: "بالفيديو",
+    heading: "ثوانٍ قليلة\nداخل سافا.",
+    body: "مقاطع حقيقية من حساب سافا. مرّر للمعاينة، أو اضغط للمشاهدة.",
     play: "تشغيل",
     close: "إغلاق",
+    labels: {
+      pourCups: "الصبّ، كوباً كوباً",
+      baristaCup: "خلف الطاولة",
+      hibiscusPour: "تحضير كركديه سافا",
+      summerFlavours: "نكهات الصيف",
+      icedMood: "مشروب بارد عند الطلب",
+    },
   },
   visit: {
-    eyebrow: "زورونا",
-    heading: "اعثر على طاولتك\nفي سافا.",
-    body: "بئر عثمان، المدينة المنورة — محطة سهلة لفنجان هادئ في أي وقت من اليوم.",
+    eyebrow: "الموقع",
+    heading: "طاولتك\nفي سافا.",
+    body: "بئر عثمان، المدينة المنورة — محطة سهلة لفنجان على مهل، في أي وقت من اليوم.",
     addressLabel: "العنوان",
     phoneLabel: "الهاتف",
     hoursLabel: "ساعات العمل",
-    hoursValue: "مفتوح يوميًا حتى ساعات متأخرة — للساعات الدقيقة اليوم راجع خرائط جوجل",
-    ratingOnGoogle: "في جوجل",
-    readReviews: "قراءة التقييمات",
+    hoursValue: "مفتوح يومياً حتى ساعات متأخرة — راجع خرائط Google لمواعيد اليوم بدقة",
+    ratingOnGoogle: "على Google",
+    readReviews: "اقرأ التقييمات",
     getDirections: "الاتجاهات",
     whatsapp: "واتساب",
-    instagram: "انستقرام",
+    instagram: "إنستغرام",
   },
   footer: {
-    instagram: "انستقرام",
+    instagram: "إنستغرام",
     directions: "الاتجاهات",
-    tagline: "قهوة مختصة، المدينة المنورة.",
+    tagline: "قهوة مختصة في المدينة المنورة.",
   },
 };
