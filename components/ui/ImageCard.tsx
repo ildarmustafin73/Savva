@@ -5,7 +5,10 @@ import { ImageSlot } from "./ImageSlot";
 
 type ImageCardProps = {
   label: string;
-  labelAr?: string;
+  /** Smaller secondary line under the name — usually the Arabic name, but
+   *  swaps to the English name when the primary label is already Arabic. */
+  labelSecondary?: string;
+  labelSecondaryDir?: "rtl" | "ltr";
   meta?: string;
   aspect?: string;
   variant?: "arch" | "grain" | "beam" | "grid" | "ring";
@@ -29,7 +32,8 @@ type ImageCardProps = {
  */
 export function ImageCard({
   label,
-  labelAr,
+  labelSecondary,
+  labelSecondaryDir = "rtl",
   meta,
   aspect = "aspect-[3/4]",
   variant = "grain",
@@ -61,9 +65,12 @@ export function ImageCard({
       />
       <div className="mt-4">
         <h3 className="font-display text-xl text-text-primary">{label}</h3>
-        {labelAr && (
-          <p dir="rtl" className="mt-0.5 font-arabic text-sm text-text-secondary">
-            {labelAr}
+        {labelSecondary && (
+          <p
+            dir={labelSecondaryDir}
+            className={`mt-0.5 text-sm text-text-secondary ${labelSecondaryDir === "rtl" ? "font-arabic" : ""}`}
+          >
+            {labelSecondary}
           </p>
         )}
         {meta && <p className="tabular-nums mt-1 text-sm text-text-secondary">{meta}</p>}

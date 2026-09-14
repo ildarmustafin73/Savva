@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState, type RefObject } from "react";
 import { motion, useAnimation } from "framer-motion";
 import { menu, savvaSelectionIds } from "@/data/menu";
+import { getMenuItemLabel } from "@/data/i18n/menuLabel";
 import { ImageCard } from "./ui/ImageCard";
 import { Reveal } from "./ui/Reveal";
 import { SectionHeader } from "./ui/SectionHeader";
+import { useLocale } from "./i18n/LocaleProvider";
 
 const variants = ["ring", "grain", "beam", "grid"] as const;
 const offsets = ["md:mt-6", "md:mt-1", "md:mt-8", "md:mt-3"];
@@ -92,6 +94,7 @@ function useReplayOnFullExit(
 }
 
 export function SignatureDrinks() {
+  const { t, locale } = useLocale();
   const sectionRef = useRef<HTMLElement>(null);
   const controls = useAnimation();
   const step = useCardStagger();
@@ -110,7 +113,7 @@ export function SignatureDrinks() {
   return (
     <section ref={sectionRef} className="mx-auto max-w-content px-5 py-14 sm:px-8 sm:py-20 md:py-24 lg:px-12">
       <Reveal>
-        <SectionHeader eyebrow="SAVVA Selection" heading={"Carries the\nSAVVA name."} size="large" />
+        <SectionHeader eyebrow={t.selection.eyebrow} heading={t.selection.heading} size="large" />
       </Reveal>
 
       {/* Mobile: horizontal scroll-snap. Desktop: editorial offset grid.
@@ -132,19 +135,21 @@ export function SignatureDrinks() {
             honest placeholder rather than a drink or invented imagery.
             TODO: replace with official SAVVA interior/counter/seating photography. */}
         <div className="w-[68vw] shrink-0 snap-start md:w-auto">
-          <ImageCard label="The space" variant="arch" aspect="aspect-[3/4]" revealDirection="left" />
+          <ImageCard label={t.selection.spaceLabel} variant="arch" aspect="aspect-[3/4]" revealDirection="left" />
         </div>
 
         {drinkItems.map((item, i) => {
           const photo = photoByName[item.name];
+          const { primary, secondary, secondaryDir } = getMenuItemLabel(item, locale);
           return (
             <div
               key={item.name}
               className={`w-[68vw] shrink-0 snap-start md:w-auto ${offsets[i % offsets.length]}`}
             >
               <ImageCard
-                label={item.name}
-                labelAr={item.nameAr}
+                label={primary}
+                labelSecondary={secondary}
+                labelSecondaryDir={secondaryDir}
                 meta={`${item.price} SAR`}
                 variant={variants[i % variants.length]}
                 aspect="aspect-[3/4]"

@@ -3,11 +3,12 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { brand, links } from "@/data/content";
+import { links } from "@/data/content";
 import { BotanicalBranch } from "./ui/BotanicalBranch";
 import { ClipReveal } from "./ui/ClipReveal";
 import { CTAButton } from "./ui/CTAButton";
 import { Logo } from "./ui/Logo";
+import { useLocale } from "./i18n/LocaleProvider";
 
 const easing = [0.22, 1, 0.36, 1] as const;
 
@@ -31,6 +32,7 @@ const line = {
  * adds life without replacing the committed colour strategy.
  */
 export function Hero() {
+  const { t } = useLocale();
   const ref = useRef<HTMLElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -106,17 +108,24 @@ export function Hero() {
 
           <motion.p
             variants={line}
-            className="text-balance mt-7 max-w-xl whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tight text-on-dark sm:text-5xl md:text-6xl"
+            className="mt-5 text-xs uppercase tracking-widest2 text-on-dark-soft"
           >
-            {brand.tagline}
+            {t.hero.locationTag}
+          </motion.p>
+
+          <motion.p
+            variants={line}
+            className="text-balance mt-4 max-w-xl whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tight text-on-dark sm:text-5xl md:text-6xl"
+          >
+            {t.hero.tagline}
           </motion.p>
 
           <motion.div variants={line} className="mt-9 flex flex-wrap gap-4">
             <CTAButton href="#menu" variant="light">
-              Explore menu
+              {t.hero.exploreMenu}
             </CTAButton>
             <CTAButton href={links.directions} variant="light" external>
-              Get directions
+              {t.hero.getDirections}
             </CTAButton>
           </motion.div>
         </motion.div>

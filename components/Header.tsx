@@ -5,14 +5,16 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { links } from "@/data/content";
 import { Logo } from "./ui/Logo";
-
-const navLinks = [
-  { href: "#menu", label: "Menu" },
-  { href: "#experience", label: "Experience" },
-  { href: "#visit", label: "Visit" },
-];
+import { LanguageSwitch } from "./ui/LanguageSwitch";
+import { useLocale } from "./i18n/LocaleProvider";
 
 export function Header() {
+  const { t } = useLocale();
+  const navLinks = [
+    { href: "#menu", label: t.nav.menu },
+    { href: "#experience", label: t.nav.experience },
+    { href: "#visit", label: t.nav.visit },
+  ];
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -64,7 +66,7 @@ export function Header() {
             rel="noopener noreferrer"
             className={`text-sm transition-colors ${linkColor}`}
           >
-            Directions
+            {t.nav.directions}
           </a>
           <a
             href={links.instagram}
@@ -72,8 +74,9 @@ export function Header() {
             rel="noopener noreferrer"
             className={`text-sm transition-colors ${linkColor}`}
           >
-            Instagram
+            {t.nav.instagram}
           </a>
+          <LanguageSwitch tone={light ? "light" : "dark"} />
         </div>
 
         <button
@@ -115,23 +118,26 @@ export function Header() {
               </a>
             ))}
           </nav>
-          <div className="mt-6 flex gap-8">
-            <a
-              href={links.directions}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-text-secondary"
-            >
-              Directions
-            </a>
-            <a
-              href={links.instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-text-secondary"
-            >
-              Instagram
-            </a>
+          <div className="mt-6 flex items-center justify-between">
+            <div className="flex gap-8">
+              <a
+                href={links.directions}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-text-secondary"
+              >
+                {t.nav.directions}
+              </a>
+              <a
+                href={links.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-text-secondary"
+              >
+                {t.nav.instagram}
+              </a>
+            </div>
+            <LanguageSwitch tone="light" />
           </div>
         </motion.div>
       )}

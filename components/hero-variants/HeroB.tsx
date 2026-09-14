@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { brand, links } from "@/data/content";
+import { links } from "@/data/content";
 import { CTAButton } from "../ui/CTAButton";
 import { Logo } from "../ui/Logo";
 
@@ -80,7 +80,7 @@ export function HeroB() {
           variants={line}
           className="text-balance mt-8 whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tight text-on-dark sm:text-5xl md:text-[3.75rem]"
         >
-          {brand.tagline}
+          {"A day in SAVVA\nis all you need."}
         </motion.p>
 
         <motion.div variants={line} className="mt-10 flex flex-wrap justify-center gap-4">

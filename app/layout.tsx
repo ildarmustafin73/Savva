@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bricolage_Grotesque, Manrope, Noto_Naskh_Arabic } from "next/font/google";
 import "./globals.css";
 import { MotionProvider } from "@/components/MotionProvider";
+import { LocaleProvider } from "@/components/i18n/LocaleProvider";
 import { siteUrl, visit } from "@/data/content";
 
 // Display face with real character — deliberately not Fraunces/Playfair/
@@ -75,8 +76,28 @@ const structuredData = {
     postalCode: "42331",
     addressCountry: "SA",
   },
+  // Read directly from the official Google Maps listing on 2026-09-14 —
+  // not carried over from any third-party site.
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: visit.rating,
+    reviewCount: visit.reviewCount,
+  },
   sameAs: ["https://www.instagram.com/savva_cafe"],
 };
+
+// Runs before hydration so a stored Arabic/Russian preference doesn't
+// flash English-LTR for a frame first. Mirrors the same storage key
+// LocaleProvider reads client-side.
+const noFlashLocaleScript = `
+(function () {
+  try {
+    var v = localStorage.getItem("savva-locale");
+    if (v === "ar") { document.documentElement.lang = "ar"; document.documentElement.dir = "rtl"; }
+    else if (v === "ru") { document.documentElement.lang = "ru"; document.documentElement.dir = "ltr"; }
+  } catch (e) {}
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -94,9 +115,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <script dangerouslySetInnerHTML={{ __html: noFlashLocaleScript }} />
       </head>
       <body className="font-sans antialiased">
-        <MotionProvider>{children}</MotionProvider>
+        <LocaleProvider>
+          <MotionProvider>{children}</MotionProvider>
+        </LocaleProvider>
       </body>
     </html>
   );

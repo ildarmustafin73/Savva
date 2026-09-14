@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { brand, links } from "@/data/content";
+import { links } from "@/data/content";
 import { BotanicalBranch } from "../ui/BotanicalBranch";
 import { ClipReveal } from "../ui/ClipReveal";
 import { CTAButton } from "../ui/CTAButton";
@@ -104,7 +104,7 @@ export function HeroA({
             variants={line}
             className="text-balance mt-7 max-w-xl whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tight text-on-dark sm:text-5xl md:text-6xl"
           >
-            {brand.tagline}
+            {"A day in SAVVA\nis all you need."}
           </motion.p>
 
           <motion.div variants={line} className="mt-9 flex flex-wrap gap-4">

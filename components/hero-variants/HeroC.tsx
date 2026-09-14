@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
-import { brand, links } from "@/data/content";
+import { links } from "@/data/content";
 import { CTAButton } from "../ui/CTAButton";
 import { ImageSlot } from "../ui/ImageSlot";
 
@@ -114,7 +114,7 @@ export function HeroC() {
             variants={line}
             className="text-pretty mt-6 max-w-md whitespace-pre-line font-display text-2xl font-medium leading-snug tracking-tight text-text-primary sm:text-3xl"
           >
-            {brand.tagline}
+            {"A day in SAVVA\nis all you need."}
           </motion.p>
 
           <motion.div variants={line} className="mt-9 flex flex-wrap gap-4">
