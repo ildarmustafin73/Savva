@@ -17,6 +17,15 @@ type ImageSlotProps = {
   objectPosition?: string;
   /** Stagger delay for the reveal, when several slots enter together (e.g. a grid). */
   delay?: number;
+  /** Mask-wipe direction for the entrance reveal. "up" (default, used everywhere
+   *  else on the site) wipes bottom-to-top. "left" wipes right-to-left, revealing
+   *  left-to-right — for sequences where card order reads left→right (e.g. a
+   *  showcase row), so the wipe direction matches the reading/stagger direction. */
+  revealDirection?: "up" | "left";
+  /** Skip this component's own reveal entirely — for when a parent (e.g. a
+   *  card wrapping image + text) owns a single reveal for the whole unit and
+   *  this image must not also animate on its own. Renders a plain div. */
+  disableReveal?: boolean;
   className?: string;
 };
 
@@ -42,20 +51,25 @@ export function ImageSlot({
   sizes = "100vw",
   objectPosition = "center",
   delay = 0,
+  revealDirection = "up",
+  disableReveal = false,
   className = "",
 }: ImageSlotProps) {
   const frame =
     "relative overflow-hidden outline outline-1 -outline-offset-1 outline-black/10 shadow-depth";
-  const reveal = {
-    initial: { clipPath: "inset(0 0 100% 0)" },
-    whileInView: { clipPath: "inset(0 0 0% 0)" },
-    viewport: { once: true as const, margin: "-10% 0px" },
-    transition: { duration: 0.9, delay, ease: [0.65, 0, 0.35, 1] as const },
-  };
+  const reveal = disableReveal
+    ? {}
+    : {
+        initial: { clipPath: revealDirection === "left" ? "inset(0 100% 0 0)" : "inset(0 0 100% 0)" },
+        whileInView: { clipPath: revealDirection === "left" ? "inset(0 0 0 0)" : "inset(0 0 0% 0)" },
+        viewport: { once: true as const, margin: "-10% 0px" },
+        transition: { duration: 0.9, delay, ease: [0.65, 0, 0.35, 1] as const },
+      };
+  const Wrapper = disableReveal ? "div" : motion.div;
 
   if (src) {
     return (
-      <motion.div className={`${frame} ${aspect} ${className}`} {...reveal}>
+      <Wrapper className={`${frame} ${aspect} ${className}`} {...reveal}>
         <Image
           src={src}
           alt={alt}
@@ -65,14 +79,14 @@ export function ImageSlot({
           className="object-cover"
           style={{ objectPosition }}
         />
-      </motion.div>
+      </Wrapper>
     );
   }
 
   return (
-    <motion.div className={`${frame} ${aspect} ${className}`} role="img" aria-label={alt} {...reveal}>
+    <Wrapper className={`${frame} ${aspect} ${className}`} role="img" aria-label={alt} {...reveal}>
       <PlaceholderArt variant={variant} />
-    </motion.div>
+    </Wrapper>
   );
 }
 

@@ -11,37 +11,33 @@ type MoodItem = {
   objectPosition?: string;
 };
 
-// Three of six are real SAVVA photography (official Instagram, full-res
-// originals — see public/images/savva/README.md). The other three stay as
-// abstract placeholders: no matching official photo exists yet for a wide
-// interior view, a wood-detail close-up, or a seating/tables shot.
+// Two real SAVVA photographs (official Instagram, full-res originals — see
+// public/images/savva/README.md), each given a full half-row rather than a
+// small corner slot — an editorial choice over cramming in a third, weaker
+// photo. The former third real photo (mood-cafe-table.jpg) now leads the
+// Hero instead. The remaining three stay abstract placeholders: no
+// matching official photo exists yet for a wide interior view, a wood-
+// detail close-up, or a seating/tables shot.
 const items: MoodItem[] = [
-  { alt: "SAVVA interior — wide view", variant: "arch", aspect: "aspect-[16/10]", span: "md:col-span-8" }, // TODO: replace with official SAVVA photography
-  { alt: "SAVVA — wood detail", variant: "grid", aspect: "aspect-square", span: "md:col-span-4" }, // TODO: replace with official SAVVA photography
+  { alt: "SAVVA interior — wide view", variant: "arch", aspect: "aspect-[16/10]", span: "md:col-span-7" }, // TODO: replace with official SAVVA photography
+  { alt: "SAVVA — wood detail", variant: "grid", aspect: "aspect-square", span: "md:col-span-5" }, // TODO: replace with official SAVVA photography
   {
-    alt: "SAVVA — working over coffee, plant and window light",
-    variant: "ring",
-    aspect: "aspect-[3/4]",
-    span: "md:col-span-4 md:row-span-2",
-    src: "/images/savva/mood-cafe-table.jpg",
+    alt: "SAVVA — cold drink detail on a wood table",
+    variant: "grain",
+    aspect: "aspect-[4/5]",
+    span: "md:col-span-5",
+    src: "/images/savva/mood-window-light.jpg",
+    objectPosition: "65% 55%",
   },
   {
     alt: "SAVVA — three cold drinks in the afternoon light",
     variant: "beam",
-    aspect: "aspect-[4/3]",
-    span: "md:col-span-8",
+    aspect: "aspect-[16/9]",
+    span: "md:col-span-7",
     src: "/images/savva/drink-lineup.jpg",
     objectPosition: "center 65%",
   },
-  {
-    alt: "SAVVA — cold drink detail on a wood table",
-    variant: "grain",
-    aspect: "aspect-square",
-    span: "md:col-span-4",
-    src: "/images/savva/mood-window-light.jpg",
-    objectPosition: "65% 55%",
-  },
-  { alt: "SAVVA — natural light", variant: "arch", aspect: "aspect-[16/9]", span: "md:col-span-8" }, // TODO: replace with official SAVVA photography
+  { alt: "SAVVA — natural light", variant: "arch", aspect: "aspect-[21/9]", span: "md:col-span-12" }, // TODO: replace with official SAVVA photography
 ];
 
 export function MoodGallery() {
