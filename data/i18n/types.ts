@@ -46,6 +46,9 @@ export type Dictionary = {
     sweetBody: string;
     toCar: string;
     toCarBody: string;
+    /** VideoCard's own small label overlay for the sandwich/coffee reel — no
+     *  descriptive caption block sits beside this one on purpose. */
+    counterVideoLabel: string;
   };
   /** The standalone "Наши десерты" section — several real photos and
    *  videos, separate from the Food section above it. Madini Cookies (name +

@@ -21,7 +21,7 @@ export function MenuTabs() {
   const active = menu.find((c) => c.id === activeId) ?? menu[0];
 
   return (
-    <section id="menu" className="relative overflow-hidden bg-olive-ink py-14 sm:py-20 md:py-24">
+    <section id="menu" className="relative overflow-hidden bg-olive-ink py-14 sm:py-16 md:py-20">
       <BotanicalBranch
         tone="on-dark"
         className="pointer-events-none absolute -left-8 top-6 hidden h-[88%] w-auto opacity-[0.1] lg:block"

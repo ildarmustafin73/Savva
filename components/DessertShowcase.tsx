@@ -32,29 +32,28 @@ const allItems = menu.flatMap((c) => c.items);
  * mechanic already works well and re-testing a second implementation would
  * add risk for no benefit.
  *
- * Six real desserts, five photos and four videos — Madini Cookies (kept from
- * the previous pass) plus five more found via nine specific Instagram post
- * URLs the client sent directly. Fetching a post by its own URL isn't
- * subject to the profile grid's "~12 most recent posts" ceiling, so this
- * reaches real material the earlier grid-only search couldn't. Two names are
- * confirmed by the posts' own captions and priced straight from the menu
- * (Madini Cookies, Pecan Cake); the rest are real SAVVA desserts with no
- * confirmed dish name, so they carry an honest short description instead of
- * a guess.
+ * Six real desserts, four photos and four videos — Madini Cookies's own
+ * stacked-cookies photo was removed by client request (the Madini Cookies
+ * video already carries that dish here), plus five more found via nine
+ * specific Instagram post URLs the client sent directly. Fetching a post by
+ * its own URL isn't subject to the profile grid's "~12 most recent posts"
+ * ceiling, so this reaches real material the earlier grid-only search
+ * couldn't. Two names are confirmed by the posts' own captions and priced
+ * straight from the menu (Madini Cookies, Pecan Cake); the rest are real
+ * SAVVA desserts with no confirmed dish name, so they carry an honest short
+ * description instead of a guess.
  */
 export function DessertShowcase() {
   const { t, locale } = useLocale();
   const lightboxRef = useRef<VideoLightboxHandle>(null);
 
-  const cookies = allItems.find((i) => i.name === "Madini Cookies");
-  const cookiesLabel = cookies ? getMenuItemLabel(cookies, locale) : null;
   const pecan = allItems.find((i) => i.name === "Pecan Cake");
   const pecanLabel = pecan ? getMenuItemLabel(pecan, locale) : null;
   const cinnamonDanish = allItems.find((i) => i.name === "Cinnamon Danish");
   const cinnamonDanishLabel = cinnamonDanish ? getMenuItemLabel(cinnamonDanish, locale) : null;
 
   return (
-    <section id="desserts" className="scroll-mt-24 bg-surface py-16 sm:py-20 md:py-28">
+    <section id="desserts" className="scroll-mt-24 bg-surface pb-10 pt-14 sm:pb-12 sm:pt-16 md:pb-12 md:pt-20">
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
           <h2 className="text-balance whitespace-pre-line font-display text-5xl font-medium leading-[1.02] tracking-tightest text-text-primary sm:text-6xl md:text-7xl">
@@ -62,16 +61,24 @@ export function DessertShowcase() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:mt-16 md:grid-cols-12 md:gap-6">
+        {/* Every video slot below is sized (via its own md:col-span, not a
+            fixed max-width) to land close in rendered height to whatever
+            photo shares its row — e.g. mango at col-span-7 and this clip at
+            col-span-3 come out within ~15px of each other at 1440px, instead
+            of the previous wide column + centered clip, which still left a
+            large flanking gap either way. Below md the grid collapses to a
+            single column, so the width cap there is the only thing keeping
+            these portrait clips from stretching to the full phone width. */}
+        <div className="mt-8 grid gap-5 md:mt-10 md:grid-cols-12 md:gap-6">
           {/* Mango cheesecake — hard daylight, dramatic shadow. The
               section's opening frame. No dish name confirmed. */}
-          <figure className="md:col-span-7">
+          <figure className="md:col-span-8">
             <ImageSlot
               src={photos.dessertMangoCheesecake.src}
               alt={photos.dessertMangoCheesecake.alt}
               aspect="aspect-[4/3]"
               objectPosition={photos.dessertMangoCheesecake.objectPosition}
-              sizes="(min-width: 768px) 58vw, 100vw"
+              sizes="(min-width: 768px) 66vw, 100vw"
               hoverZoom
             />
             <figcaption className="mt-4">
@@ -82,20 +89,25 @@ export function DessertShowcase() {
             </figcaption>
           </figure>
 
-          {/* Pecan Cake, filmed close — verified by the reel's own caption. */}
-          <div className="md:col-span-5 md:mt-10">
-            <VideoCard
-              src={dessertPecanClip.src}
-              poster={dessertPecanClip.poster}
-              label={t.desserts.pecanVideoLabel}
-              onOpen={() =>
-                lightboxRef.current?.open(
-                  dessertPecanClip.src,
-                  dessertPecanClip.poster,
-                  t.desserts.pecanVideoLabel
-                )
-              }
-            />
+          {/* Pecan Cake, filmed close — verified by the reel's own caption.
+              col-span-4 (not -3) so this row fills the full 12 columns —
+              at -3 it left a ~230px empty margin on the right; at -4 it also
+              lands within ~15px of mango's own figure height. */}
+          <div className="md:col-span-4">
+            <div className="mx-auto max-w-[260px] sm:max-w-[300px] md:max-w-none">
+              <VideoCard
+                src={dessertPecanClip.src}
+                poster={dessertPecanClip.poster}
+                label={t.desserts.pecanVideoLabel}
+                onOpen={() =>
+                  lightboxRef.current?.open(
+                    dessertPecanClip.src,
+                    dessertPecanClip.poster,
+                    t.desserts.pecanVideoLabel
+                  )
+                }
+              />
+            </div>
           </div>
 
           {/* Pecan Cake — verified item, official price, a different real
@@ -145,20 +157,24 @@ export function DessertShowcase() {
           </figure>
 
           {/* A second real dessert video — dark chocolate cake, no dish name
-              confirmed. */}
-          <div className="md:col-span-4 md:mt-3">
-            <VideoCard
-              src={dessertChocBerryClip.src}
-              poster={dessertChocBerryClip.poster}
-              label={t.desserts.chocBerryVideoLabel}
-              onOpen={() =>
-                lightboxRef.current?.open(
-                  dessertChocBerryClip.src,
-                  dessertChocBerryClip.poster,
-                  t.desserts.chocBerryVideoLabel
-                )
-              }
-            />
+              confirmed. Narrower column (col-span-3, not -4) so it lands
+              close to the two 4/5-aspect photos sharing this row instead of
+              towering over them. */}
+          <div className="md:col-span-3">
+            <div className="mx-auto max-w-[220px] sm:max-w-[250px] md:max-w-none">
+              <VideoCard
+                src={dessertChocBerryClip.src}
+                poster={dessertChocBerryClip.poster}
+                label={t.desserts.chocBerryVideoLabel}
+                onOpen={() =>
+                  lightboxRef.current?.open(
+                    dessertChocBerryClip.src,
+                    dessertChocBerryClip.poster,
+                    t.desserts.chocBerryVideoLabel
+                  )
+                }
+              />
+            </div>
           </div>
 
           {/* Same chocolate-and-blueberry cake as the video above, from the
@@ -183,64 +199,52 @@ export function DessertShowcase() {
           </figure>
 
           {/* Madini Cookies being made — the client's favourite from the
-              previous pass, kept exactly as it was. */}
-          <div className="md:col-span-7 md:mt-10">
-            <VideoCard
-              src={dessertMadiniClip.src}
-              poster={dessertMadiniClip.poster}
-              label={t.desserts.madiniVideoLabel}
-              onOpen={() =>
-                lightboxRef.current?.open(
-                  dessertMadiniClip.src,
-                  dessertMadiniClip.poster,
-                  t.desserts.madiniVideoLabel
-                )
-              }
-            />
+              previous pass, kept exactly as it was (same video, same poster,
+              same label, same lightbox behaviour). Column narrowed from
+              col-span-7 to col-span-4 — at -7 this was the single tallest
+              element on the page (≈1376px); at -4 it lands within ~90px of
+              the chocBerry photo sharing its row. */}
+          <div className="md:col-span-4">
+            <div className="mx-auto max-w-[240px] sm:max-w-[280px] md:max-w-none">
+              <VideoCard
+                src={dessertMadiniClip.src}
+                poster={dessertMadiniClip.poster}
+                label={t.desserts.madiniVideoLabel}
+                onOpen={() =>
+                  lightboxRef.current?.open(
+                    dessertMadiniClip.src,
+                    dessertMadiniClip.poster,
+                    t.desserts.madiniVideoLabel
+                  )
+                }
+              />
+            </div>
           </div>
 
-          {/* Madini Cookies — verified item, official price, a different
-              real photo (hand-held stack) from the video's own poster. */}
-          <figure className="md:col-span-6">
-            <ImageSlot
-              src={photos.cookiesStack.src}
-              alt={photos.cookiesStack.alt}
-              aspect="aspect-[4/5]"
-              objectPosition={photos.cookiesStack.objectPosition}
-              sizes="(min-width: 768px) 48vw, 100vw"
-              delay={0.1}
-              hoverZoom
-            />
-            <figcaption className="mt-4 flex items-baseline justify-between gap-4">
-              <h3 className="font-display text-2xl text-text-primary sm:text-3xl">
-                {cookiesLabel?.primary}
-              </h3>
-              {cookies && (
-                <p className="tabular-nums shrink-0 text-base text-text-secondary sm:text-lg">
-                  {cookies.price} SAR
-                </p>
-              )}
-            </figcaption>
-          </figure>
-
-          {/* A warm baked pudding with caramel and almonds — oven, plating
-              and someone actually enjoying it, all in one clip. No dish name
-              confirmed and no separate photo exists, so it stands alone
-              rather than being paired with a guessed still. */}
-          <div className="md:col-span-6 md:mt-8">
-            <VideoCard
-              src={dessertWinterPuddingClip.src}
-              poster={dessertWinterPuddingClip.poster}
-              label={t.desserts.winterPudding}
-              onOpen={() =>
-                lightboxRef.current?.open(
-                  dessertWinterPuddingClip.src,
-                  dessertWinterPuddingClip.poster,
-                  t.desserts.winterPudding
-                )
-              }
-            />
-            <p className="text-pretty mt-4 max-w-sm text-base leading-relaxed text-text-secondary sm:text-lg">
+          {/* Winter Pudding — folded into this same row (chocBerry + Madini)
+              instead of standing alone in a fourth row. Madini Cookies' own
+              stacked-cookies photo used to fill this row's remaining width;
+              removing it (client request) would otherwise have left a whole
+              extra, mostly-empty row below. Putting this clip and its body
+              copy here instead — stacked as one column, matching the two
+              photo/video figures beside it — removes that row entirely
+              rather than just resizing what stood in it. */}
+          <div className="md:col-span-3">
+            <div className="mx-auto max-w-[260px] sm:max-w-[300px] md:max-w-none">
+              <VideoCard
+                src={dessertWinterPuddingClip.src}
+                poster={dessertWinterPuddingClip.poster}
+                label={t.desserts.winterPudding}
+                onOpen={() =>
+                  lightboxRef.current?.open(
+                    dessertWinterPuddingClip.src,
+                    dessertWinterPuddingClip.poster,
+                    t.desserts.winterPudding
+                  )
+                }
+              />
+            </div>
+            <p className="text-pretty mx-auto mt-4 max-w-[260px] sm:max-w-[300px] text-base leading-relaxed text-text-secondary sm:text-lg md:max-w-none">
               {t.desserts.winterPuddingBody}
             </p>
           </div>

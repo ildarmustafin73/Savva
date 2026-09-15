@@ -405,6 +405,16 @@ export const dessertWinterPuddingClip = {
   evidence: 'reel DTKxrj2jK0W caption "بودينق الشتاء الدفء… حين يتحول إلى لقمة 🌿"; no dish name given',
 };
 
+// A wrapped sandwich and an iced SAVVA coffee on the terrace — client-sent
+// reel link. Caption doesn't name the sandwich, so it's shown without a
+// guessed dish name.
+export const breakfastClip = {
+  src: "/videos/savva/breakfast-morning.mp4",
+  poster: "/images/savva/video-poster-breakfast-morning.jpg",
+  source: "ig" as const,
+  evidence: 'reel DW9Sx7JstZy caption "فطور سافا واجوائه غير 🥭😋"; no dish name given',
+};
+
 /**
  * The four cards the "start here" section shows.
  *

@@ -1,10 +1,13 @@
 "use client";
 
+import { useRef } from "react";
 import { menu } from "@/data/menu";
-import { photos } from "@/data/media";
+import { photos, breakfastClip } from "@/data/media";
 import { getMenuItemLabel } from "@/data/i18n/menuLabel";
 import { ImageSlot } from "../ui/ImageSlot";
 import { Reveal } from "../ui/Reveal";
+import { VideoCard } from "../ui/VideoCard";
+import { VideoLightbox, type VideoLightboxHandle } from "../ui/VideoLightbox";
 import { useLocale } from "../i18n/LocaleProvider";
 
 const allItems = menu.flatMap((c) => c.items);
@@ -25,6 +28,7 @@ const allItems = menu.flatMap((c) => c.items);
  */
 export function FoodEditorial() {
   const { t, locale } = useLocale();
+  const lightboxRef = useRef<VideoLightboxHandle>(null);
 
   const halloumi = allItems.find((i) => i.name === "Halloumi Sandwich");
 
@@ -33,28 +37,28 @@ export function FoodEditorial() {
     item ? getMenuItemLabel(item, locale).primary : "";
 
   return (
-    <section className="bg-surface py-16 sm:py-20 md:py-28">
+    <section className="bg-surface pt-10 pb-10 sm:pt-12 sm:pb-12 md:pt-14 md:pb-12">
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
           {/* A full section on its own, so the heading carries real weight —
               matching the scale used for the section above it, not a small
               eyebrow-and-caption treatment. */}
-          <h2 className="text-balance whitespace-pre-line font-display text-5xl font-medium leading-[1.02] tracking-tightest text-text-primary sm:text-6xl md:text-7xl">
+          <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl md:text-6xl">
             {t.food.heading}
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 md:mt-16 md:grid-cols-12 md:gap-6">
+        <div className="mt-8 grid gap-5 md:mt-10 md:grid-cols-12 md:gap-6">
           {/* Halloumi Sandwich — verified item, official price. The name now
               sits close under the photo at real display size, rather than a
               small line trailing a lot of empty space beside it. */}
-          <figure className="md:col-span-7">
+          <figure className="md:col-span-8">
             <ImageSlot
               src={halloumi ? photos.halloumi.src : undefined}
               alt={photos.halloumi.alt}
               aspect="aspect-[4/3]"
               objectPosition={photos.halloumi.objectPosition}
-              sizes="(min-width: 768px) 58vw, 100vw"
+              sizes="(min-width: 768px) 66vw, 100vw"
               hoverZoom
             />
             <figcaption className="mt-4 flex items-baseline justify-between gap-4">
@@ -66,13 +70,13 @@ export function FoodEditorial() {
           {/* A real SAVVA pastry (owner-confirmed Instagram post) — replaces
               the flower photo that used to stand here. Its own caption never
               names the dish, so it's captioned honestly rather than guessed. */}
-          <figure className="md:col-span-5 md:mt-16">
+          <figure className="md:col-span-4">
             <ImageSlot
               src={photos.dessertPastry.src}
               alt={photos.dessertPastry.alt}
               aspect="aspect-[4/5]"
               objectPosition={photos.dessertPastry.objectPosition}
-              sizes="(min-width: 768px) 40vw, 100vw"
+              sizes="(min-width: 768px) 32vw, 100vw"
               delay={0.1}
               hoverZoom
             />
@@ -86,25 +90,47 @@ export function FoodEditorial() {
 
           {/* Breakfast handed out to a car window — real SAVVA service, and
               real food (a wrapped sandwich), framed here around the food
-              rather than the delivery logistics. */}
-          <figure className="md:col-span-12">
+              rather than the delivery logistics. Caption sits below the
+              photo, left-aligned, like every other figure in this section. */}
+          <figure className="md:col-span-8">
             <ImageSlot
               src={photos.carService.src}
               alt={photos.carService.alt}
-              aspect="aspect-[21/9]"
+              aspect="aspect-[16/9]"
               objectPosition={photos.carService.objectPosition}
-              sizes="100vw"
+              sizes="(min-width: 768px) 66vw, 100vw"
               hoverZoom
             />
-            <figcaption className="mt-4 max-w-sm">
-              <h3 className="font-display text-xl text-text-primary sm:text-2xl">{t.food.toCar}</h3>
-              <p className="text-pretty mt-1.5 text-base leading-relaxed text-text-secondary">
+            <figcaption className="mt-4">
+              <h3 className="font-display text-2xl text-text-primary sm:text-3xl">{t.food.toCar}</h3>
+              <p className="text-pretty mt-1.5 max-w-none text-3xl leading-relaxed text-text-secondary sm:text-4xl">
                 {t.food.toCarBody}
               </p>
             </figcaption>
           </figure>
+
+          {/* A real client-sent reel — sandwich and iced coffee on the
+              terrace — replacing the counter-dessert photo that used to
+              stand here. No caption block beside it on purpose (client
+              request): just the clip, same as it sits in Desserts'
+              video-only slots. Column narrowed to a portrait cap so the 9:16
+              clip doesn't stretch to fill the full grid column. */}
+          <div className="md:col-span-4">
+            <div className="mx-auto max-w-[280px] sm:max-w-[320px] md:max-w-none">
+              <VideoCard
+                src={breakfastClip.src}
+                poster={breakfastClip.poster}
+                label={t.food.counterVideoLabel}
+                onOpen={() =>
+                  lightboxRef.current?.open(breakfastClip.src, breakfastClip.poster, t.food.counterVideoLabel)
+                }
+              />
+            </div>
+          </div>
         </div>
       </div>
+
+      <VideoLightbox ref={lightboxRef} closeLabel={t.video.close} />
     </section>
   );
 }

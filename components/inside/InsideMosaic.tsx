@@ -24,17 +24,22 @@ import { useLocale } from "../i18n/LocaleProvider";
 export function InsideMosaic() {
   const { t } = useLocale();
 
+  // Column spans below are chosen so paired items in the same auto-placed
+  // grid row land close in rendered height (not just offset by margin) —
+  // e.g. lounge at col-span-6 and loungeVase at col-span-4 come out within
+  // ~50px of each other, instead of the previous col-span-7/5 pairing where
+  // one side was ~240px taller than the other regardless of any offset.
   const items = [
-    { photo: photos.lounge, span: "md:col-span-7", aspect: "aspect-[4/5]", offset: "" },
-    { photo: photos.loungeVase, span: "md:col-span-5", aspect: "aspect-[3/4]", offset: "md:mt-20" },
+    { photo: photos.lounge, span: "md:col-span-6", aspect: "aspect-[4/5]", offset: "" },
+    { photo: photos.loungeVase, span: "md:col-span-4", aspect: "aspect-[3/4]", offset: "md:mt-10" },
     { photo: photos.facadeWide, span: "md:col-span-8", aspect: "aspect-[16/9]", offset: "" },
-    { photo: photos.tray, span: "md:col-span-4", aspect: "aspect-[3/4]", offset: "md:-mt-16" },
-    { photo: photos.loungeLatte, span: "md:col-span-6", aspect: "aspect-[4/5]", offset: "" },
-    { photo: photos.shelfDetail, span: "md:col-span-6", aspect: "aspect-[4/3]", offset: "md:mt-10" },
+    { photo: photos.tray, span: "md:col-span-3", aspect: "aspect-[3/4]", offset: "md:-mt-16" },
+    { photo: photos.loungeLatte, span: "md:col-span-5", aspect: "aspect-[4/5]", offset: "" },
+    { photo: photos.shelfDetail, span: "md:col-span-7", aspect: "aspect-[4/3]", offset: "md:mt-4" },
   ];
 
   return (
-    <section id="inside" className="scroll-mt-24 bg-background py-16 sm:py-20 md:py-28">
+    <section id="inside" className="scroll-mt-24 bg-background pt-10 pb-14 sm:pt-12 sm:pb-16 md:pt-12 md:pb-20">
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
           <h2 className="text-balance max-w-2xl whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
@@ -42,7 +47,7 @@ export function InsideMosaic() {
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-5 md:mt-16 md:grid-cols-12 md:gap-6">
+        <div className="mt-8 grid grid-cols-1 gap-5 md:mt-10 md:grid-cols-12 md:gap-6">
           {items.map(({ photo, span, aspect, offset }, i) => (
             <div key={photo.src} className={`${span} ${offset}`}>
               <ImageSlot

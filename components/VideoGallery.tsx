@@ -22,7 +22,7 @@ export function VideoGallery() {
   const lightboxRef = useRef<VideoLightboxHandle>(null);
 
   return (
-    <section className="overflow-hidden bg-background py-16 sm:py-20 md:py-28">
+    <section className="overflow-hidden bg-background py-14 sm:py-16 md:py-20">
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
           <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
@@ -31,8 +31,20 @@ export function VideoGallery() {
         </Reveal>
       </div>
 
-      <div className="mt-10 md:mt-14">
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-2 pb-6 sm:gap-5 sm:px-8 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {/* mx-auto max-w-content here matches the heading's own container above —
+          without it, this rail's own padding was measured from the raw
+          viewport instead of the centered content column, so on any screen
+          wider than max-w-content + 2×padding (~1536px) the whole rail sat
+          well left of where the heading above it starts. */}
+      <div className="mx-auto mt-8 max-w-content md:mt-10">
+        {/* scroll-pl-* (scroll-padding, not just padding) is required here:
+            a scroll-snap-x container whose children snap-start otherwise
+            initializes scrollLeft equal to the leading padding — as if
+            already scrolled past it — so the padding never actually shows
+            and the first card sits flush at the true edge. scroll-padding
+            tells the snap algorithm to treat the padded position as the
+            valid snap point instead of scrolling past it. */}
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 py-2 pb-6 scroll-pl-5 sm:gap-5 sm:px-8 sm:scroll-pl-8 lg:px-12 lg:scroll-pl-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           {clips.map((clip, i) => {
             const label = t.video.labels[clip.labelKey];
             return (

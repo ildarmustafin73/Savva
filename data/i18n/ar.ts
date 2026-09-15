@@ -43,6 +43,7 @@ export const ar: Dictionary = {
     sweetBody: "بيكان وغلاصة وعجين مورّق — من واجهة المعجنات.",
     toCar: "متأخر؟",
     toCarBody: "قهوتك وفطورك يوصلون لك بالسيارة، بدون ما تتأخر.",
+    counterVideoLabel: "فطور على التراس",
   },
   desserts: {
     heading: "حلوياتنا.",

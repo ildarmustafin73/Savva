@@ -46,6 +46,7 @@ export const en: Dictionary = {
     sweetBody: "Pecan, glaze and laminated pastry — from the bakery case.",
     toCar: "Running late?",
     toCarBody: "Coffee and breakfast brought out to your car, so you don't lose the minutes.",
+    counterVideoLabel: "Breakfast on the terrace",
   },
   desserts: {
     heading: "Our desserts.",

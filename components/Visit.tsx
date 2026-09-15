@@ -21,7 +21,7 @@ export function Visit() {
   const { t } = useLocale();
 
   return (
-    <section id="visit" className="mx-auto max-w-content px-5 py-14 sm:px-8 sm:py-20 md:py-24 lg:px-12">
+    <section id="visit" className="mx-auto max-w-content px-5 py-14 sm:px-8 sm:py-16 md:py-20 lg:px-12">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Reveal>
           {/* A single, bigger wayfinding heading — the section used to carry

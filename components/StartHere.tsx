@@ -8,7 +8,7 @@ import { ImageCard } from "./ui/ImageCard";
 import { Reveal } from "./ui/Reveal";
 import { useLocale } from "./i18n/LocaleProvider";
 
-const offsets = ["md:mt-0", "md:mt-10", "md:mt-2", "md:mt-12"];
+const offsets = ["md:mt-0", "md:mt-6", "md:mt-1", "md:mt-8"];
 
 const allItems = menu.flatMap((c) => c.items);
 
@@ -130,7 +130,7 @@ export function StartHere() {
     <section
       id="start"
       ref={sectionRef}
-      className="mx-auto max-w-content scroll-mt-24 px-5 py-16 sm:px-8 sm:py-20 md:py-24 lg:px-12"
+      className="mx-auto max-w-content scroll-mt-24 px-5 py-14 sm:px-8 sm:py-16 md:py-20 lg:px-12"
     >
       {/* No eyebrow label and no supporting paragraph here on purpose — the
           client asked (repeatedly) for the "First time at SAVVA?" body copy
@@ -145,7 +145,7 @@ export function StartHere() {
       {/* Mobile: horizontal scroll-snap. Desktop: editorial offset grid.
           py-2 + overflow-x-auto below md absorbs the hover lift's overhang on a
           hover-capable device sitting at a narrow width. */}
-      <div className="-mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 py-2 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-4 md:gap-7 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
+      <div className="-mx-5 mt-8 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 py-2 pb-4 [scrollbar-width:none] md:mx-0 md:mt-10 md:grid md:grid-cols-4 md:gap-7 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
         {cards.map((card, i) => {
           const menuLabel = card.priced ? getMenuItemLabel(card.item, locale) : null;
           const primary = card.priced
