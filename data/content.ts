@@ -4,7 +4,7 @@
 // this file holds only things that don't change between languages: raw
 // addresses, phone numbers, coordinates, counts.
 
-export const siteUrl = "https://savva-cafe.example.com"; // TODO: replace with official production domain
+export const siteUrl = "https://savva-pi.vercel.app";
 
 const whatsappNumber = "966564370303"; // same confirmed number as the phone below, in wa.me format
 
