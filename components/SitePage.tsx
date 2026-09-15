@@ -3,36 +3,32 @@
 import { Header } from "./Header";
 import { HeroInterior } from "./hero/HeroInterior";
 import { HeroFacade } from "./hero/HeroFacade";
-import { HeroWindow } from "./hero/HeroWindow";
+import { HeroVideo } from "./hero/HeroVideo";
 import { StartHere } from "./StartHere";
 import { MenuTabs } from "./MenuTabs";
 import { FoodEditorial } from "./food/FoodEditorial";
 import { FoodCounter } from "./food/FoodCounter";
+import { DessertShowcase } from "./DessertShowcase";
 import { InsideMosaic } from "./inside/InsideMosaic";
 import { InsideRail } from "./inside/InsideRail";
 import { VideoGallery } from "./VideoGallery";
-import { ExperienceCards } from "./experience/ExperienceCards";
-import { ExperienceBand } from "./experience/ExperienceBand";
 import { Visit } from "./Visit";
 import { Footer } from "./Footer";
 
 export type HeroVariant = "interior" | "facade" | "window";
 export type FoodVariant = "editorial" | "counter";
 export type InsideVariant = "mosaic" | "rail";
-export type ExperienceVariant = "cards" | "band";
 
 export type SiteVariants = {
   hero: HeroVariant;
   food: FoodVariant;
   inside: InsideVariant;
-  experience: ExperienceVariant;
 };
 
 export const defaultVariants: SiteVariants = {
-  hero: "facade",
+  hero: "window",
   food: "editorial",
   inside: "mosaic",
-  experience: "cards",
 };
 
 /** Hero A is the only one on a cream ground, so it needs dark header chrome. */
@@ -50,10 +46,9 @@ const heroTone = (v: HeroVariant) => (v === "interior" ? "light" : "dark");
  */
 export function SitePage({ variants }: { variants: SiteVariants }) {
   const Hero =
-    variants.hero === "interior" ? HeroInterior : variants.hero === "window" ? HeroWindow : HeroFacade;
+    variants.hero === "interior" ? HeroInterior : variants.hero === "window" ? HeroVideo : HeroFacade;
   const Food = variants.food === "counter" ? FoodCounter : FoodEditorial;
   const Inside = variants.inside === "rail" ? InsideRail : InsideMosaic;
-  const Experience = variants.experience === "band" ? ExperienceBand : ExperienceCards;
 
   return (
     <>
@@ -62,10 +57,10 @@ export function SitePage({ variants }: { variants: SiteVariants }) {
         <Hero />
         <StartHere />
         <MenuTabs />
-        <Food />
-        <Inside />
         <VideoGallery />
-        <Experience />
+        <Food />
+        <DessertShowcase />
+        <Inside />
         <Visit />
       </main>
       <Footer />

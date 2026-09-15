@@ -86,15 +86,21 @@ const structuredData = {
   sameAs: ["https://www.instagram.com/savva_cafe"],
 };
 
-// Runs before hydration so a stored Arabic/Russian preference doesn't
-// flash English-LTR for a frame first. Mirrors the same storage key
-// LocaleProvider reads client-side.
+// Runs before hydration so a stored Arabic preference doesn't paint one
+// English-LTR frame first. Mirrors the storage key LocaleProvider reads.
+//
+// It deliberately writes only `data-locale`, never `lang`/`dir`: those two are
+// rendered by React on <html>, and mutating them before hydration makes React
+// report a prop mismatch it cannot be told to ignore here. Direction is applied
+// from data-locale in globals.css instead, and LocaleProvider sets the real
+// lang/dir attributes once hydrated — after the point React compares them.
 const noFlashLocaleScript = `
 (function () {
   try {
     var v = localStorage.getItem("savva-locale");
-    if (v === "ar") { document.documentElement.lang = "ar"; document.documentElement.dir = "rtl"; }
-    else if (v === "ru") { document.documentElement.lang = "ru"; document.documentElement.dir = "ltr"; }
+    if (v === "ar" || v === "ru" || v === "en") {
+      document.documentElement.setAttribute("data-locale", v);
+    }
   } catch (e) {}
 })();
 `;
@@ -105,9 +111,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    // noFlashLocaleScript sets data-locale on this element before React
+    // hydrates. suppressHydrationWarning covers this element's own attributes
+    // (and nothing below it), which is exactly the intended scope.
     <html
       lang="en"
       dir="ltr"
+      suppressHydrationWarning
       className={`${bricolage.variable} ${manrope.variable} ${notoNaskhArabic.variable}`}
     >
       <head>

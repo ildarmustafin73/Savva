@@ -52,6 +52,14 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Set by the pre-hydration script in app/layout.tsx. It stands in for the
+   `dir` attribute during the first paint, so a returning Arabic visitor never
+   sees one left-to-right frame. LocaleProvider sets the real lang/dir
+   attributes as soon as it hydrates. */
+html[data-locale="ar"] {
+  direction: rtl;
+}
+
 body {
   background-color: rgb(var(--color-background));
   color: rgb(var(--color-text-primary));

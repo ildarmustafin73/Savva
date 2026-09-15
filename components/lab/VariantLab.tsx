@@ -8,7 +8,6 @@ import {
   type HeroVariant,
   type FoodVariant,
   type InsideVariant,
-  type ExperienceVariant,
 } from "../SitePage";
 
 const STORAGE_KEY = "savva-lab-variants";
@@ -19,12 +18,7 @@ type Group<K extends keyof SiteVariants> = {
   options: { value: SiteVariants[K]; tag: string; name: string }[];
 };
 
-const groups: [
-  Group<"hero">,
-  Group<"food">,
-  Group<"inside">,
-  Group<"experience">,
-] = [
+const groups: [Group<"hero">, Group<"food">, Group<"inside">] = [
   {
     key: "hero",
     title: "Hero",
@@ -48,14 +42,6 @@ const groups: [
     options: [
       { value: "mosaic" as InsideVariant, tag: "A", name: "Мозаика" },
       { value: "rail" as InsideVariant, tag: "B", name: "Лента" },
-    ],
-  },
-  {
-    key: "experience",
-    title: "Три причины",
-    options: [
-      { value: "cards" as ExperienceVariant, tag: "A", name: "С фото" },
-      { value: "band" as ExperienceVariant, tag: "B", name: "Полосой" },
     ],
   },
 ];

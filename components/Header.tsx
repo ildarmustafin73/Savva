@@ -66,7 +66,13 @@ export function Header({ heroTone = "dark" }: HeaderProps) {
     >
       <div className="mx-auto flex max-w-content items-center justify-between gap-6 px-5 py-3.5 sm:px-8 lg:px-12">
         <Link href="#top" aria-label="SAVVA — back to top" className="shrink-0">
-          <Logo variant="wordmark" tone={light ? "olive" : "cream"} className="h-11 sm:h-12" />
+          {/* Always above the fold, and a frequent LCP candidate — preload it. */}
+          <Logo
+            variant="wordmark"
+            tone={light ? "olive" : "cream"}
+            priority
+            className="h-11 sm:h-12"
+          />
         </Link>
 
         <nav className="hidden items-center gap-9 md:flex lg:gap-12">
@@ -74,7 +80,7 @@ export function Header({ heroTone = "dark" }: HeaderProps) {
             <a
               key={link.href}
               href={link.href}
-              className={`group relative py-2 text-[0.9375rem] font-medium tracking-wide transition-opacity duration-200 ${linkColor} [@media(hover:hover)]:hover:opacity-100 [@media(hover:hover)]:opacity-80`}
+              className={`group relative py-2 text-[1.0625rem] font-medium tracking-wide transition-opacity duration-200 ${linkColor} [@media(hover:hover)]:hover:opacity-100 [@media(hover:hover)]:opacity-80`}
             >
               {link.label}
               {/* Hairline wipes in from the leading edge — matches the clip-path

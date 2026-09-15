@@ -19,15 +19,14 @@ import { useLocale } from "../i18n/LocaleProvider";
  */
 export function InsideRail() {
   const { t } = useLocale();
-  const c = t.mood.captions;
 
   const frames = [
-    { photo: photos.lounge, caption: c.lounge, w: "w-[78vw] sm:w-[30rem]", aspect: "aspect-[4/5]", drop: "" },
-    { photo: photos.counter, caption: c.counter, w: "w-[62vw] sm:w-[20rem]", aspect: "aspect-[3/4]", drop: "sm:mt-14" },
-    { photo: photos.facadeWide, caption: c.facade, w: "w-[86vw] sm:w-[34rem]", aspect: "aspect-[16/9]", drop: "sm:mt-6" },
-    { photo: photos.tray, caption: c.tray, w: "w-[62vw] sm:w-[19rem]", aspect: "aspect-[3/4]", drop: "" },
-    { photo: photos.coldOnWood, caption: c.table, w: "w-[62vw] sm:w-[20rem]", aspect: "aspect-[4/5]", drop: "sm:mt-16" },
-    { photo: photos.shelfTrio, caption: c.cold, w: "w-[78vw] sm:w-[26rem]", aspect: "aspect-[4/3]", drop: "sm:mt-4" },
+    { photo: photos.lounge, w: "w-[78vw] sm:w-[30rem]", aspect: "aspect-[4/5]", drop: "" },
+    { photo: photos.loungeVase, w: "w-[62vw] sm:w-[20rem]", aspect: "aspect-[3/4]", drop: "sm:mt-14" },
+    { photo: photos.facadeWide, w: "w-[86vw] sm:w-[34rem]", aspect: "aspect-[16/9]", drop: "sm:mt-6" },
+    { photo: photos.tray, w: "w-[62vw] sm:w-[19rem]", aspect: "aspect-[3/4]", drop: "" },
+    { photo: photos.loungeLatte, w: "w-[62vw] sm:w-[20rem]", aspect: "aspect-[4/5]", drop: "sm:mt-16" },
+    { photo: photos.shelfDetail, w: "w-[78vw] sm:w-[26rem]", aspect: "aspect-[4/3]", drop: "sm:mt-4" },
   ];
 
   return (
@@ -35,15 +34,9 @@ export function InsideRail() {
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
           <div className="max-w-xl">
-            <p className="mb-3 text-xs uppercase tracking-widest2 text-text-secondary">
-              {t.mood.eyebrow}
-            </p>
             <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
               {t.mood.heading}
             </h2>
-            <p className="text-pretty mt-5 text-[0.9375rem] leading-relaxed text-text-secondary">
-              {t.mood.body}
-            </p>
           </div>
         </Reveal>
       </div>
@@ -52,8 +45,8 @@ export function InsideRail() {
           it reads as continuing rather than ending. */}
       <div className="mt-12 md:mt-16">
         <div className="flex snap-x snap-mandatory items-start gap-5 overflow-x-auto px-5 pb-6 sm:gap-7 sm:px-8 lg:px-12 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {frames.map(({ photo, caption, w, aspect, drop }, i) => (
-            <figure key={photo.src} className={`${w} ${drop} shrink-0 snap-start`}>
+          {frames.map(({ photo, w, aspect, drop }, i) => (
+            <div key={photo.src} className={`${w} ${drop} shrink-0 snap-start`}>
               <ImageSlot
                 src={photo.src}
                 alt={photo.alt}
@@ -61,9 +54,9 @@ export function InsideRail() {
                 objectPosition={photo.objectPosition}
                 sizes="(min-width: 640px) 34rem, 86vw"
                 delay={i * 0.05}
+                hoverZoom
               />
-              <figcaption className="mt-3 text-sm text-text-secondary">{caption}</figcaption>
-            </figure>
+            </div>
           ))}
           {/* Trailing gutter so the last frame can reach the left edge when scrolled. */}
           <span aria-hidden="true" className="w-1 shrink-0 sm:w-4" />

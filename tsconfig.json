@@ -28,6 +28,7 @@
     "components/Experience.tsx",
     "components/Hero.tsx",
     "components/ui/SectionHeader.tsx",
-    "components/hero-variants"
+    "components/hero-variants",
+    "components/hero/HeroWindow.tsx"
   ]
 }

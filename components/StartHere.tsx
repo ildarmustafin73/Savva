@@ -13,17 +13,27 @@ const offsets = ["md:mt-0", "md:mt-10", "md:mt-2", "md:mt-12"];
 const allItems = menu.flatMap((c) => c.items);
 
 /**
- * Every card here is a menu item SAVVA named themselves (see data/media.ts for
- * the caption each one is verified against) paired with its own photograph.
- * There is deliberately no abstract "atmosphere" placeholder in this row any
- * more — the space now has a section of its own, with real interior photos.
+ * Three of the four cards are a menu item SAVVA named themselves (see
+ * data/media.ts for the caption each is verified against) paired with its own
+ * photograph and official price. The fourth is a real photo with no confirmed
+ * item name — see data/media.ts's `dessertPastry` entry for why — so it
+ * carries a plain description instead of a guessed name and price.
  */
 const cards = startHere
   .map((entry) => {
-    const item = allItems.find((i) => i.name === entry.menuName);
-    return item
-      ? { item, photo: entry.photo, cardName: "cardName" in entry ? entry.cardName : undefined }
-      : null;
+    if ("menuName" in entry) {
+      const item = allItems.find((i) => i.name === entry.menuName);
+      if (!item) return null;
+      return {
+        photo: entry.photo,
+        priced: true as const,
+        item,
+        cardName: "cardName" in entry ? entry.cardName : undefined,
+      };
+    }
+    // Standalone card: a real photo without a confirmed menu-item tie, so no
+    // price or Arabic-name pairing is shown — just the honest label.
+    return { photo: entry.photo, priced: false as const, label: entry.label };
   })
   .filter((c): c is NonNullable<typeof c> => Boolean(c));
 
@@ -122,43 +132,43 @@ export function StartHere() {
       ref={sectionRef}
       className="mx-auto max-w-content scroll-mt-24 px-5 py-16 sm:px-8 sm:py-20 md:py-24 lg:px-12"
     >
+      {/* No eyebrow label and no supporting paragraph here on purpose — the
+          client asked (repeatedly) for the "First time at SAVVA?" body copy
+          and the small "Start here" label gone, and for the heading to carry
+          the section on its own rather than leaving a gap where they stood. */}
       <Reveal>
-        <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div>
-            <p className="mb-3 text-xs uppercase tracking-widest2 text-text-secondary">
-              {t.selection.eyebrow}
-            </p>
-            <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
-              {t.selection.heading}
-            </h2>
-          </div>
-          <p className="text-pretty max-w-sm text-[0.9375rem] leading-relaxed text-text-secondary md:pb-2">
-            {t.selection.body}
-          </p>
-        </div>
+        <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
+          {t.selection.heading}
+        </h2>
       </Reveal>
 
       {/* Mobile: horizontal scroll-snap. Desktop: editorial offset grid.
           py-2 + overflow-x-auto below md absorbs the hover lift's overhang on a
           hover-capable device sitting at a narrow width. */}
       <div className="-mx-5 mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 py-2 pb-4 [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-4 md:gap-7 md:overflow-visible md:px-0 md:pb-0 [&::-webkit-scrollbar]:hidden">
-        {cards.map(({ item, photo, cardName }, i) => {
-          const label = getMenuItemLabel(item, locale);
-          const primary = cardName ? cardName[locale] : label.primary;
-          const { secondary, secondaryDir } = label;
+        {cards.map((card, i) => {
+          const menuLabel = card.priced ? getMenuItemLabel(card.item, locale) : null;
+          const primary = card.priced
+            ? card.cardName
+              ? card.cardName[locale]
+              : menuLabel!.primary
+            : card.label[locale];
+          const secondary = menuLabel?.secondary;
+          const secondaryDir = menuLabel?.secondaryDir;
+          const key = card.priced ? card.item.name : card.photo.src;
           return (
             <div
-              key={item.name}
+              key={key}
               className={`w-[68vw] shrink-0 snap-start sm:w-[46vw] md:w-auto ${offsets[i % offsets.length]}`}
             >
               <ImageCard
                 label={primary}
                 labelSecondary={secondary}
                 labelSecondaryDir={secondaryDir}
-                meta={`${item.price} SAR`}
+                meta={card.priced ? `${card.item.price} SAR` : undefined}
                 aspect="aspect-[3/4]"
-                src={photo.src}
-                objectPosition={photo.objectPosition}
+                src={card.photo.src}
+                objectPosition={card.photo.objectPosition}
                 revealDirection="left"
                 revealed={shown}
                 revealDelay={i * step}

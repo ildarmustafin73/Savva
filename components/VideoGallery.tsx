@@ -25,19 +25,9 @@ export function VideoGallery() {
     <section className="overflow-hidden bg-background py-16 sm:py-20 md:py-28">
       <div className="mx-auto max-w-content px-5 sm:px-8 lg:px-12">
         <Reveal>
-          <div className="grid gap-6 md:grid-cols-12 md:items-end">
-            <div className="md:col-span-7">
-              <p className="mb-3 text-xs uppercase tracking-widest2 text-text-secondary">
-                {t.video.eyebrow}
-              </p>
-              <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
-                {t.video.heading}
-              </h2>
-            </div>
-            <p className="text-pretty max-w-sm text-[0.9375rem] leading-relaxed text-text-secondary md:col-span-4 md:col-start-9">
-              {t.video.body}
-            </p>
-          </div>
+          <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
+            {t.video.heading}
+          </h2>
         </Reveal>
       </div>
 

@@ -33,15 +33,23 @@ const aspect = {
  * menu artwork (not a placeholder font, not a third party's logo) — a
  * faithful stand-in until a real vector file is supplied.
  */
-export function Logo({ variant = "wordmark", tone = "cream", className = "" }: LogoProps) {
+export function Logo({
+  variant = "wordmark",
+  tone = "cream",
+  className = "",
+  priority = false,
+}: LogoProps) {
   return (
     <span className={`relative inline-block ${className}`} style={{ aspectRatio: aspect[variant] }}>
       <Image
         src={sources[variant][tone]}
         alt="SAVVA"
         fill
+        priority={priority}
         className="object-contain"
-        sizes="300px"
+        // Largest use is the hero wordmark at roughly 90px wide, so 200px
+        // still covers a 2x screen without pulling a needlessly large file.
+        sizes="200px"
       />
     </span>
   );

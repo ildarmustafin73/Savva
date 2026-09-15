@@ -24,37 +24,49 @@ export function Visit() {
     <section id="visit" className="mx-auto max-w-content px-5 py-14 sm:px-8 sm:py-20 md:py-24 lg:px-12">
       <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
         <Reveal>
-          <p className="mb-3 text-xs uppercase tracking-widest2 text-text-secondary">{t.visit.eyebrow}</p>
+          {/* A single, bigger wayfinding heading — the section used to carry
+              a small uppercase label here and a separate, more poetic
+              headline below ("Find your table at SAVVA."); the client asked
+              for that second line gone, so the practical label is promoted
+              to do the section's one job at real display size instead of
+              leaving a gap where the old headline stood. */}
           <h2 className="text-balance whitespace-pre-line font-display text-4xl font-medium leading-[1.05] tracking-tight text-text-primary sm:text-5xl md:text-6xl">
             {t.visit.heading}
           </h2>
-          <p className="text-pretty mt-4 max-w-md text-lg leading-relaxed text-text-secondary">
+          <p className="text-pretty mt-4 max-w-md text-xl leading-relaxed text-text-secondary">
             {t.visit.body}
           </p>
 
           {/* Rating — read directly from SAVVA's own Google Maps listing, not
-              carried over from any third party. */}
+              carried over from any third party. The star and number are the
+              two things a visitor actually scans for, so they now stand at
+              the same weight as the section's own headline numbers rather
+              than reading like a small footnote link. */}
           <a
             href={links.reviews}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-6 inline-flex items-center gap-2 text-sm text-text-primary transition-colors [@media(hover:hover)]:hover:text-olive"
+            className="mt-7 inline-flex flex-wrap items-baseline gap-x-3 gap-y-1 text-text-primary transition-colors [@media(hover:hover)]:hover:text-olive"
           >
-            <span aria-hidden="true" className="text-olive">★</span>
-            <span className="tabular-nums font-medium">{visit.rating.toFixed(1)}</span>
-            <span className="text-text-secondary">
-              · {visit.reviewCount} {t.visit.ratingOnGoogle} · {t.visit.readReviews}
+            <span className="flex items-baseline gap-2">
+              <span aria-hidden="true" className="text-3xl text-olive sm:text-4xl">★</span>
+              <span className="tabular-nums font-display text-3xl font-medium sm:text-4xl">
+                {visit.rating.toFixed(1)}
+              </span>
+            </span>
+            <span className="text-lg text-text-secondary sm:text-xl">
+              {visit.reviewCount} {t.visit.ratingOnGoogle} · {t.visit.readReviews}
             </span>
           </a>
 
-          <dl className="mt-8 space-y-6 text-lg">
+          <dl className="mt-9 space-y-7 text-xl">
             <div>
               <dt className="text-sm uppercase tracking-widest2 text-text-secondary">{t.visit.addressLabel}</dt>
-              <dd className="mt-1 text-text-primary">{visit.address}</dd>
+              <dd className="mt-1.5 text-text-primary">{visit.address}</dd>
             </div>
             <div>
               <dt className="text-sm uppercase tracking-widest2 text-text-secondary">{t.visit.phoneLabel}</dt>
-              <dd className="mt-1 text-text-primary">
+              <dd className="mt-1.5 text-text-primary">
                 <a
                   href={`tel:${visit.phone.replace(/\s+/g, "")}`}
                   className="tabular-nums transition-colors [@media(hover:hover)]:hover:text-olive"
@@ -65,7 +77,7 @@ export function Visit() {
             </div>
             <div>
               <dt className="text-sm uppercase tracking-widest2 text-text-secondary">{t.visit.hoursLabel}</dt>
-              <dd className="mt-1 text-text-primary">{t.visit.hoursValue}</dd>
+              <dd className="mt-1.5 whitespace-pre-line text-text-primary">{t.visit.hoursValue}</dd>
             </div>
           </dl>
 

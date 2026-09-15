@@ -28,7 +28,9 @@ export type Dictionary = {
   };
   menuSection: {
     eyebrow: string;
-    heading: string;
+    /** Short category list ("Hot · Cold · Desserts · Breakfast") standing in
+     *  for a display heading — see MenuTabs.tsx. */
+    categories: string;
     body: string;
   };
   food: {
@@ -38,21 +40,32 @@ export type Dictionary = {
     /** Labels for the three real, caption-verified items shown in this section. */
     combo: string;
     comboBody: string;
+    /** A real dessert-and-coffee moment with no confirmed dish name — an
+     *  honest, non-specific caption rather than a guess. */
+    sweet: string;
+    sweetBody: string;
     toCar: string;
     toCarBody: string;
   };
-  mood: {
-    eyebrow: string;
+  /** The standalone "Наши десерты" section — several real photos and
+   *  videos, separate from the Food section above it. Madini Cookies (name +
+   *  price) and Pecan Cake (name + price) come straight from the menu data;
+   *  the rest are real but unnamed, so they get an honest short caption
+   *  instead of a guessed dish name. */
+  desserts: {
     heading: string;
-    body: string;
-    captions: {
-      lounge: string;
-      counter: string;
-      facade: string;
-      tray: string;
-      table: string;
-      cold: string;
-    };
+    madiniVideoLabel: string;
+    pecanVideoLabel: string;
+    mango: string;
+    mangoBody: string;
+    chocBerry: string;
+    chocBerryBody: string;
+    chocBerryVideoLabel: string;
+    winterPudding: string;
+    winterPuddingBody: string;
+  };
+  mood: {
+    heading: string;
   };
   experience: {
     eyebrow: string;
@@ -62,7 +75,6 @@ export type Dictionary = {
   video: {
     eyebrow: string;
     heading: string;
-    body: string;
     play: string;
     close: string;
     labels: {

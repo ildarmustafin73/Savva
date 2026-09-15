@@ -27,6 +27,12 @@ type ImageSlotProps = {
    *  card wrapping image + text) owns a single reveal for the whole unit and
    *  this image must not also animate on its own. Renders a plain div. */
   disableReveal?: boolean;
+  /** A gentle zoom on the photo itself when its own frame is hovered — for
+   *  slots that otherwise have no hover feedback (Inside, Food). Off by
+   *  default where a parent already owns a whole-card hover treatment (e.g.
+   *  ImageCard's lift + scale), so the two don't compound into a double
+   *  zoom. */
+  hoverZoom?: boolean;
   className?: string;
 };
 
@@ -54,10 +60,11 @@ export function ImageSlot({
   delay = 0,
   revealDirection = "up",
   disableReveal = false,
+  hoverZoom = false,
   className = "",
 }: ImageSlotProps) {
   const frame =
-    "relative overflow-hidden outline outline-1 -outline-offset-1 outline-black/10 shadow-depth";
+    "group relative overflow-hidden outline outline-1 -outline-offset-1 outline-black/10 shadow-depth";
   const ref = useRef<HTMLDivElement>(null);
   const revealed = useScrollReveal(ref, disableReveal);
 
@@ -84,7 +91,9 @@ export function ImageSlot({
           fill
           priority={priority}
           sizes={sizes}
-          className="object-cover"
+          className={`object-cover transition-transform duration-700 ease-soft motion-reduce:transition-none ${
+            hoverZoom ? "[@media(hover:hover)]:group-hover:scale-[1.04]" : ""
+          }`}
           style={{ objectPosition }}
         />
       ) : (

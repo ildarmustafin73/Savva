@@ -17,8 +17,12 @@ export const links = {
   whatsapp: `https://wa.me/${whatsappNumber}`,
   // No-API-key Google Maps embed (query-based iframe) — avoids requiring a
   // Maps API key/credential. Address verified against the official listing.
+  // `&z=16` is a viewport zoom level, not a coordinate — without it Google's
+  // default zoom left a lot of surrounding street visible and the pin sat
+  // low and to one side of the frame; a closer zoom keeps the same real
+  // location but centres the marker in the embed on both desktop and mobile.
   mapEmbed:
-    "https://www.google.com/maps?q=%D8%B3%D8%A7%D9%81%D8%A7+savva,+Zubairah+Al+Roumiah,+Bir+Uthman,+Madinah+42331&output=embed",
+    "https://www.google.com/maps?q=%D8%B3%D8%A7%D9%81%D8%A7+savva,+Zubairah+Al+Roumiah,+Bir+Uthman,+Madinah+42331&z=16&output=embed",
 };
 
 export const brand = {
@@ -32,11 +36,12 @@ export const visit = {
   address: "Zubairah Al Roumiah, Bir Uthman, Madinah 42331, Saudi Arabia",
   phone: "+966 56 437 0303",
   // Rating + review count read directly from the live official listing on
-  // 2026-09-14 — not copied from any third-party site. The full weekly
-  // hours table could not be independently confirmed in that same check
-  // (only "open, closes ~02:00" today-snapshot was available), so no
-  // invented weekly schedule is printed — see data/i18n for the honest
-  // phrasing actually shown.
+  // 2026-09-14 — not copied from any third-party site.
   rating: 4.7,
   reviewCount: 729,
+  // Full weekly hours, read directly from the same official Google Maps
+  // listing's public schedule table on 2026-09-15 (no login needed — the
+  // listing exposes all seven days): 06:30–02:00 every day except Friday,
+  // which opens later at 13:00 (closing time unchanged). See data/i18n for
+  // the printed phrasing.
 };
